@@ -30,6 +30,13 @@ class PostsController < ApplicationController
     end
   end
 
+  def generate_ai
+    @post = Post.find(params[:id])
+    response = Ai::GeneratePostContent.new(prompt: @post.body).call
+    @post.update(prompt: response.content)
+    redirect_to post_path(@post)
+  end
+
   private
 
   def post_params

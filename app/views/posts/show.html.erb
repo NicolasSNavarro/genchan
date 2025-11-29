@@ -56,7 +56,7 @@
       </div>
 
       <!-- IA RESPONSE -->
-      <%# if @post.ai_response.present? %>
+      <% if @post.prompt.present? %>
         <div class="mt-6 rounded-xl border border-sky-400/40 bg-slate-950/70 p-4">
           <div class="flex items-center gap-2 mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-sky-300">
             <span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>
@@ -64,19 +64,19 @@
           </div>
 
           <p class="text-[13px] leading-relaxed text-slate-100 whitespace-pre-line">
-            <%#= @post.ai_response %>
+            <%= @post.prompt %>
           </p>
         </div>
-      <%# else %>
-        <%# if authenticated? %>
+      <% else %>
+        <% if authenticated? %>
           <div class="mt-6">
-            <%#= button_to "Generar respuesta con IA",
+            <%= button_to "Generar opinion con IA",
               generate_ai_post_path(@post),
               method: :post,
               class: "inline-flex items-center justify-center rounded-xl bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-sky-500/30 hover:bg-sky-400 transition" %>
           </div>
-        <%# end %>
-      <%# end %>
+        <% end %>
+      <% end %>
     </article>
 
     <!-- ACTIONS -->
