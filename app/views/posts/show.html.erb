@@ -1,0 +1,95 @@
+<div class="min-h-screen bg-slate-950 text-slate-50">
+  <!-- HEADER -->
+  <div class="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
+      <div class="flex items-center gap-3">
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 ring-1 ring-emerald-400/40">
+          <span class="text-lg font-semibold text-emerald-300">G</span>
+        </div>
+        <div>
+          <h1 class="text-lg font-semibold tracking-tight">GenChan</h1>
+          <p class="text-xs text-slate-400">Posteos anónimos con IA generativa</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs">
+        <%= link_to "Volver",
+          root_path,
+          class: "inline-flex items-center justify-center rounded-full border border-slate-700 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
+
+        <% if authenticated? %>
+          <%= link_to "Mi perfil",
+            user_path(current_user),
+            class: "hidden sm:inline-flex items-center justify-center rounded-full border border-slate-700 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
+
+          <%= button_to "Salir",
+            session_path,
+            method: :delete,
+            class: "inline-flex items-center justify-center rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-semibold text-slate-950 hover:bg-slate-200" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="mx-auto max-w-3xl px-4 py-10">
+    <!-- POST CARD -->
+    <article class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 shadow-lg shadow-slate-950/40">
+      <header class="mb-4 space-y-2">
+        <h2 class="text-xl font-semibold text-slate-50 tracking-tight">
+          <%= @post.title %>
+        </h2>
+
+        <div class="flex items-center gap-2 text-xs text-slate-500">
+          <span class="rounded-full bg-slate-950/80 px-2 py-0.5 ring-1 ring-slate-700 text-[10px] uppercase tracking-wide text-emerald-300">
+            anonymous
+          </span>
+
+          <span>
+            <%= l @post.created_at, format: "%d %b %Y · %H:%M" %>
+          </span>
+        </div>
+      </header>
+
+      <div class="text-sm leading-relaxed text-slate-200 whitespace-pre-line">
+        <%= @post.body %>
+      </div>
+
+      <!-- IA RESPONSE -->
+      <%# if @post.ai_response.present? %>
+        <div class="mt-6 rounded-xl border border-sky-400/40 bg-slate-950/70 p-4">
+          <div class="flex items-center gap-2 mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-sky-300">
+            <span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>
+            <span>Respuesta de la IA</span>
+          </div>
+
+          <p class="text-[13px] leading-relaxed text-slate-100 whitespace-pre-line">
+            <%#= @post.ai_response %>
+          </p>
+        </div>
+      <%# else %>
+        <%# if authenticated? %>
+          <div class="mt-6">
+            <%#= button_to "Generar respuesta con IA",
+              generate_ai_post_path(@post),
+              method: :post,
+              class: "inline-flex items-center justify-center rounded-xl bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-sky-500/30 hover:bg-sky-400 transition" %>
+          </div>
+        <%# end %>
+      <%# end %>
+    </article>
+
+    <!-- ACTIONS -->
+    <div class="mt-6 flex justify-between text-sm">
+      <%= link_to "Volver al timeline",
+        root_path,
+        class: "text-slate-400 hover:text-slate-200" %>
+
+      <% if authenticated? && @post.user_id == current_user.id %>
+        <%= link_to "Editar post",
+          edit_post_path(@post),
+          class: "text-emerald-300 hover:text-emerald-200" %>
+      <% end %>
+    </div>
+  </main>
+</div>

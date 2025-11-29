@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   allow_unauthenticated_access
 
   def home
-    @posts = []
+    @post = Post.new
+    @posts = Post.all
   end
 end

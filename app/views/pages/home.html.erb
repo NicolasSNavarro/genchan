@@ -1,116 +1,142 @@
 <div class="min-h-screen bg-slate-950 text-slate-50">
+  <!-- HEADER -->
   <div class="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
-    <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
+    <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
       <div class="flex items-center gap-3">
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 ring-1 ring-emerald-400/40">
-          <span class="text-lg font-semibold text-emerald-300">G</span>
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 ring-1 ring-emerald-400/40">
+          <span class="text-xl font-semibold text-emerald-300">G</span>
         </div>
         <div>
-          <h1 class="text-lg font-semibold tracking-tight">
-            GenChan
-          </h1>
-          <p class="text-xs text-slate-400">
-            Posteos anónimos con IA generativa
-          </p>
+          <h1 class="text-lg font-semibold tracking-tight">GenChan</h1>
+          <p class="text-xs text-slate-400">Posteos anónimos con IA generativa</p>
         </div>
       </div>
 
       <div class="flex items-center gap-3 text-xs">
         <% if authenticated? %>
-          <div class="hidden items-center gap-2 sm:flex">
-            <span class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-3 py-1 text-[11px] text-slate-400">
-              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              <span>Sesión como</span>
-              <span class="font-semibold text-emerald-300">anonymous</span>
-            </span>
+          <%= link_to "Mi perfil",
+            user_path(current_user),
+            class: "hidden sm:inline-flex items-center justify-center rounded-full border border-slate-700 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
 
-            <%= link_to "Mi perfil",
-              user_path(current_user),
-              class: "inline-flex items-center justify-center rounded-full border border-slate-700 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
-
-            <%= button_to "Salir",
-              session_path,
-              method: :delete,
-              class: "inline-flex items-center justify-center rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-semibold text-slate-950 hover:bg-slate-200" %>
-          </div>
-
-          <div class="flex items-center gap-2 sm:hidden">
-            <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-300">
-              anonymous
-            </span>
-          </div>
+          <%= button_to "Salir",
+            session_path,
+            method: :delete,
+            class: "inline-flex items-center justify-center rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-semibold text-slate-950 hover:bg-slate-200" %>
         <% else %>
-          <div class="flex items-center gap-2">
-            <%= link_to "Entrar",
-              new_session_path,
-              class: "inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
+          <%= link_to "Entrar",
+            new_session_path,
+            class: "inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
 
-            <%= link_to "Crear cuenta",
-              new_user_path,
-              class: "inline-flex items-center justify-center rounded-full bg-emerald-500 px-3.5 py-1.5 text-[11px] font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 hover:bg-emerald-400" %>
-          </div>
+          <%= link_to "Crear cuenta",
+            new_user_path,
+            class: "inline-flex items-center justify-center rounded-full bg-emerald-500 px-3.5 py-1.5 text-[11px] font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 hover:bg-emerald-400" %>
         <% end %>
       </div>
     </div>
   </div>
 
-  <main class="mx-auto flex max-w-4xl flex-col gap-8 px-4 py-8 lg:py-10">
+  <div class="mx-auto max-w-5xl px-4 pt-10 pb-14">
+    <div class="text-center space-y-4">
+      <h2 class="text-3xl font-semibold text-slate-50 tracking-tight">
+        Un lugar donde podés decir lo que quieras
+      </h2>
+      <p class="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
+        Posteá historias, confesiones, ideas o preguntas sin que nadie sepa quién sos.
+        Todo se muestra como <span class="text-emerald-300 font-medium">anonymous</span>.
+      </p>
 
-      <%#= form_with model: @post, url: posts_path, class: "space-y-4", data: { turbo_frame: "posts" } do |f| %>
-        <div>
-          <%#= f.text_area :body,
-            rows: 4,
-            placeholder: "Confiesa algo, pide un consejo o tira una idea loca… nadie sabrá que fuiste vos.",
-            class: "w-full resize-none rounded-xl border border-slate-700 bg-slate-950/60 px-3 py-3 text-sm text-slate-50 placeholder:text-slate-500 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" %>
-        </div>
+      <% if authenticated? %>
+        <%= link_to "Crear nuevo post",
+          new_post_path,
+          class: "inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 transition hover:bg-emerald-400" %>
+      <% else %>
+        <%= link_to "Comenzar",
+          new_session_path,
+          class: "inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 transition hover:bg-emerald-400" %>
+      <% end %>
+    </div>
 
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400">
-            <label class="inline-flex items-center gap-2">
-              <%#= f.check_box :generate_by_ai, class: "h-4 w-4 rounded border-slate-600 bg-slate-900 text-emerald-500 focus:ring-emerald-500" %>
-              <span>Generar respuesta con IA automáticamente</span>
-            </label>
-            <span class="hidden sm:inline text-[11px] text-slate-500">
-              El autor será siempre
-              <span class="font-semibold text-emerald-300">anonymous</span>
-            </span>
-          </div>
+    <!-- FEATURE STRIP -->
+    <div class="mt-10 grid sm:grid-cols-3 gap-4 text-center">
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-5">
+        <p class="text-emerald-300 text-2xl">🕶️</p>
+        <p class="text-sm font-semibold mt-3">100% Anónimo</p>
+        <p class="text-xs text-slate-400 mt-1">
+          Tu email nunca se muestra. Sos siempre anonymous.
+        </p>
+      </div>
 
-          <div class="flex items-center gap-3">
-            <button
-              type="submit"
-              class="inline-flex items-center justify-center rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 transition hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              Publicar anónimamente
-            </button>
-          </div>
-        </div>
-      <%# end %>
-    </section>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-5">
+        <p class="text-sky-300 text-2xl">🤖</p>
+        <p class="text-sm font-semibold mt-3">IA Generativa</p>
+        <p class="text-xs text-slate-400 mt-1">
+          Pedí que GenChan responda tus posteos.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-5">
+        <p class="text-purple-300 text-2xl">💬</p>
+        <p class="text-sm font-semibold mt-3">Comunidad abierta</p>
+        <p class="text-xs text-slate-400 mt-1">
+          Leé lo que otros anónimos publican.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <main class="mx-auto flex max-w-5xl flex-col gap-10 px-4 pb-16">
 
     <section class="space-y-4">
       <header class="flex items-center justify-between gap-3">
-        <h2 class="text-sm font-semibold uppercase tracking-[0.16em] text-slate-400">
-          Timeline
-        </h2>
+        <h2 class="text-sm font-semibold uppercase tracking-[0.16em] text-slate-400">Timeline</h2>
+
         <div class="flex items-center gap-2 text-xs text-slate-500">
-          <span class="hidden sm:inline">Ordenado por más reciente</span>
+          <span class="hidden sm:inline">Más reciente</span>
           <span class="inline-flex items-center gap-1 rounded-full border border-slate-800 bg-slate-900/60 px-2.5 py-1">
             <span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>
-            <span>Con respuesta IA</span>
+            <span>IA</span>
           </span>
         </div>
       </header>
 
-      <div class="space-y-4">
+      <div class="space-y-6">
         <% if @posts.empty? %>
-          <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 px-4 py-6 text-center text-sm text-slate-500">
-            Todavía no hay nada por acá. Sé el primero en postear algo anónimo.
+          <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 px-6 py-10 text-center text-sm text-slate-500">
+            Aún no hay nada… el anonimato espera.
+            <% if authenticated? %>
+              <div class="mt-4">
+                <%= link_to "Publicar algo ahora",
+                  new_post_path,
+                  class: "inline-flex items-center justify-center rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 hover:bg-emerald-400" %>
+              </div>
+            <% else %>
+              <div class="mt-4">
+                <%= link_to "Iniciar sesión para postear",
+                  new_session_path,
+                  class: "inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-900/80 px-4 py-2 text-sm font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
+              </div>
+            <% end %>
           </div>
         <% else %>
           <%= render @posts %>
+
+          <% if authenticated? %>
+            <div class="flex justify-center pt-8">
+              <%= link_to "Crear otro post",
+                new_post_path,
+                class: "inline-flex items-center justify-center rounded-xl bg-emerald-500 px-5 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 hover:bg-emerald-400" %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </section>
   </main>
+
+  <% if authenticated? %>
+    <%= link_to new_post_path,
+      class: "fixed bottom-6 right-6 inline-flex items-center justify-center rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40 h-14 w-14 hover:bg-emerald-400 transition" do %>
+      <span class="text-slate-950 text-3xl">＋</span>
+    <% end %>
+  <% end %>
 </div>
