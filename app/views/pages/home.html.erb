@@ -1,0 +1,116 @@
+<div class="min-h-screen bg-slate-950 text-slate-50">
+  <div class="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
+      <div class="flex items-center gap-3">
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 ring-1 ring-emerald-400/40">
+          <span class="text-lg font-semibold text-emerald-300">G</span>
+        </div>
+        <div>
+          <h1 class="text-lg font-semibold tracking-tight">
+            GenChan
+          </h1>
+          <p class="text-xs text-slate-400">
+            Posteos anónimos con IA generativa
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs">
+        <% if authenticated? %>
+          <div class="hidden items-center gap-2 sm:flex">
+            <span class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-3 py-1 text-[11px] text-slate-400">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              <span>Sesión como</span>
+              <span class="font-semibold text-emerald-300">anonymous</span>
+            </span>
+
+            <%= link_to "Mi perfil",
+              user_path(current_user),
+              class: "inline-flex items-center justify-center rounded-full border border-slate-700 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
+
+            <%= button_to "Salir",
+              session_path,
+              method: :delete,
+              class: "inline-flex items-center justify-center rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-semibold text-slate-950 hover:bg-slate-200" %>
+          </div>
+
+          <div class="flex items-center gap-2 sm:hidden">
+            <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-300">
+              anonymous
+            </span>
+          </div>
+        <% else %>
+          <div class="flex items-center gap-2">
+            <%= link_to "Entrar",
+              new_session_path,
+              class: "inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
+
+            <%= link_to "Crear cuenta",
+              new_user_path,
+              class: "inline-flex items-center justify-center rounded-full bg-emerald-500 px-3.5 py-1.5 text-[11px] font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 hover:bg-emerald-400" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <main class="mx-auto flex max-w-4xl flex-col gap-8 px-4 py-8 lg:py-10">
+
+      <%#= form_with model: @post, url: posts_path, class: "space-y-4", data: { turbo_frame: "posts" } do |f| %>
+        <div>
+          <%#= f.text_area :body,
+            rows: 4,
+            placeholder: "Confiesa algo, pide un consejo o tira una idea loca… nadie sabrá que fuiste vos.",
+            class: "w-full resize-none rounded-xl border border-slate-700 bg-slate-950/60 px-3 py-3 text-sm text-slate-50 placeholder:text-slate-500 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" %>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+            <label class="inline-flex items-center gap-2">
+              <%#= f.check_box :generate_by_ai, class: "h-4 w-4 rounded border-slate-600 bg-slate-900 text-emerald-500 focus:ring-emerald-500" %>
+              <span>Generar respuesta con IA automáticamente</span>
+            </label>
+            <span class="hidden sm:inline text-[11px] text-slate-500">
+              El autor será siempre
+              <span class="font-semibold text-emerald-300">anonymous</span>
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 transition hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Publicar anónimamente
+            </button>
+          </div>
+        </div>
+      <%# end %>
+    </section>
+
+    <section class="space-y-4">
+      <header class="flex items-center justify-between gap-3">
+        <h2 class="text-sm font-semibold uppercase tracking-[0.16em] text-slate-400">
+          Timeline
+        </h2>
+        <div class="flex items-center gap-2 text-xs text-slate-500">
+          <span class="hidden sm:inline">Ordenado por más reciente</span>
+          <span class="inline-flex items-center gap-1 rounded-full border border-slate-800 bg-slate-900/60 px-2.5 py-1">
+            <span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>
+            <span>Con respuesta IA</span>
+          </span>
+        </div>
+      </header>
+
+      <div class="space-y-4">
+        <% if @posts.empty? %>
+          <div class="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 px-4 py-6 text-center text-sm text-slate-500">
+            Todavía no hay nada por acá. Sé el primero en postear algo anónimo.
+          </div>
+        <% else %>
+          <%= render @posts %>
+        <% end %>
+      </div>
+    </section>
+  </main>
+</div>

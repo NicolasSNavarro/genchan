@@ -1,0 +1,118 @@
+<div class="min-h-screen bg-slate-950 text-slate-50">
+  <div class="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
+      <div class="flex items-center gap-3">
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 ring-1 ring-emerald-400/40">
+          <span class="text-lg font-semibold text-emerald-300">G</span>
+        </div>
+        <div>
+          <h1 class="text-lg font-semibold tracking-tight">
+            GenChan
+          </h1>
+          <p class="text-xs text-slate-400">
+            Posteos anónimos con IA generativa
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 text-xs">
+        <%= link_to "Volver",
+          user_path(@user),
+          class: "inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:border-emerald-400 hover:text-emerald-300" %>
+
+        <%= button_to "Salir",
+          session_path,
+          method: :delete,
+          class: "inline-flex items-center justify-center rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-semibold text-slate-950 hover:bg-slate-200" %>
+      </div>
+    </div>
+  </div>
+
+  <main class="mx-auto flex max-w-4xl flex-col items-center px-4 py-10">
+    <div class="w-full max-w-md">
+      <div class="mb-6 text-center">
+        <h2 class="text-xl font-semibold tracking-tight text-slate-50">
+          Editar cuenta
+        </h2>
+        <p class="mt-2 text-sm text-slate-400">
+          Podés cambiar tu email o contraseña. Tu identidad visible seguirá siendo
+          <span class="font-semibold text-emerald-300">anonymous</span>.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 shadow-lg shadow-slate-950/40">
+        <% if @user.errors.any? %>
+          <div class="mb-4 rounded-xl border border-red-500/40 bg-red-950/40 p-3 text-xs text-red-200">
+            <div class="mb-1 font-semibold tracking-wide">
+              Revisá estos campos:
+            </div>
+            <ul class="list-disc space-y-0.5 pl-4">
+              <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form_with model: @user, class: "space-y-5" do |f| %>
+
+          <div class="space-y-1.5">
+            <%= f.label :email_address,
+              "Email",
+              class: "block text-xs font-medium uppercase tracking-[0.16em] text-slate-400" %>
+
+            <%= f.email_field :email_address,
+              autocomplete: "email",
+              placeholder: "vos@ejemplo.com",
+              class: "block w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-50 placeholder:text-slate-500 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" %>
+          </div>
+
+          <div class="space-y-1">
+            <p class="text-xs uppercase tracking-[0.16em] text-slate-500">
+              Contraseña actual
+            </p>
+            <%= f.password_field :current_password,
+              autocomplete: "current-password",
+              placeholder: "••••••••",
+              class: "block w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-50 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" %>
+            <p class="text-[11px] text-slate-500">
+              Requerida para confirmar los cambios
+            </p>
+          </div>
+
+          <div class="space-y-1.5">
+            <%= f.label :password,
+              "Nueva contraseña",
+              class: "block text-xs font-medium uppercase tracking-[0.16em] text-slate-400" %>
+
+            <%= f.password_field :password,
+              autocomplete: "new-password",
+              placeholder: "Dejar en blanco para no cambiar",
+              class: "block w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-50 placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" %>
+          </div>
+
+          <div class="space-y-1.5">
+            <%= f.label :password_confirmation,
+              "Confirmar nueva contraseña",
+              class: "block text-xs font-medium uppercase tracking-[0.16em] text-slate-400" %>
+
+            <%= f.password_field :password_confirmation,
+              autocomplete: "new-password",
+              placeholder: "Repite tu nueva contraseña",
+              class: "block w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-50 placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30" %>
+          </div>
+
+          <div class="pt-3">
+            <button
+              type="submit"
+              class="inline-flex w-full items-center justify-center rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-sm shadow-emerald-500/30 transition hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Guardar cambios
+            </button>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>
